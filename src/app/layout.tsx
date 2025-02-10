@@ -1,14 +1,12 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import localFont from "next/font/local"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"]
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"]
+const rubik = localFont({
+  src: [
+    { path: "./fonts/Rubik-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/Rubik-Medium.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/Rubik-Italic.woff2", weight: "400", style: "italic" }
+  ]
 })
 
 export const metadata: Metadata = {
@@ -23,11 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${rubik.className} antialiased`}>{children}</body>
     </html>
   )
 }
