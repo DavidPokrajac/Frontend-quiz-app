@@ -1,0 +1,13 @@
+:root {
+  --clr-purple: hsl(277, 91%, 56%);
+  --clr-grey-700: hsl(216, 25%, 25%);
+  --clr-grey-600: hsl(215, 27%, 32%);
+  --clr-grey-500: hsl(219, 13%, 44%);
+  --clr-grey-400: hsl(216, 47%, 78%);
+  --clr-grey-300: hsl(220, 38%, 97%);
+  --clr-white: hsl(0, 0%, 100%);
+  --clr-light-greeen: hsl(151, 70%, 50%);
+  --clr-medium-red: hsl(0, 82%, 63%);
+
+  --fs-base: 12px;
+}

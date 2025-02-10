@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import "./css/reset.css"
+import "./css/variables.css"
 
 const rubik = localFont({
   src: [
