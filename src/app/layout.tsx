@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./css/reset.css"
 import "./css/variables.css"
+import "./css/globals.css"
 
 const rubik = localFont({
   src: [
@@ -23,7 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${rubik.className} antialiased`}>{children}</body>
+      <body
+        className={`${rubik.className} body grid grid-cols-[1fr] grid-rows-[min-content_1fr] bg-[var(--clr-grey-300)] antialiased`}
+      >
+        {children}
+      </body>
     </html>
   )
 }
