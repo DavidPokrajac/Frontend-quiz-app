@@ -5,3 +5,17 @@
 .fe-quiz-subject-list > * + * {
   margin-top: 0.75em;
 }
+
+progress {
+  appearance: none;
+}
+
+progress[value]::-moz-progress-value {
+  border-radius: 100vw;
+  background-color: orange;
+}
+
+progress[value]::-webkit-progress-value {
+  border-radius: 100vw;
+  background-color: orange;
+}

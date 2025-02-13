@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image"
 import Link from "next/link"
 import { promises as fs } from "fs"
 import { linkBgColor } from "../utils/linkBgColor"
+import { QuizProps } from "../quiz-section/[title]/page"
 
 export default async function QuizSubjectList() {
   const file = await fs.readFile(process.cwd() + "/data.json", "utf8")
@@ -12,7 +12,8 @@ export default async function QuizSubjectList() {
 
   return (
     <ul className="fe-quiz-subject-list">
-      {quizzes.map((quiz: any) => {
+      {quizzes.map((quiz: QuizProps) => {
+        console.log(quiz)
         return (
           <>
             <li
@@ -30,6 +31,9 @@ export default async function QuizSubjectList() {
               >
                 <span
                   className={`inline-flex h-[40px] w-[40px] items-center justify-center rounded-[0.25em] bg-[${linkBgColor(quiz.title)["bgColor"]}]`}
+                  style={{
+                    backgroundColor: linkBgColor(quiz.title)["bgColor"]
+                  }}
                 >
                   <Image
                     src={`images/icon-${linkBgColor(quiz.title)["subject"]}.svg`}
