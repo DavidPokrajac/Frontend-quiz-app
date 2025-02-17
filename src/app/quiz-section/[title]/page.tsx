@@ -13,6 +13,7 @@ import {
 } from "react"
 import Header from "@/app/components/Header"
 import Image from "next/image"
+import Link from "next/link"
 
 interface DataProps {
   title: string
@@ -41,6 +42,7 @@ export default function Page() {
   const [data, setData] = useState([])
   const [checkedName, setCheckedName] = useState<string>("")
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const [questionNumber, setQuestionNumber] = useState<number>(0)
 
   const searchParams = useSearchParams()
   const search = searchParams.get("title")
@@ -65,6 +67,7 @@ export default function Page() {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault()
+    console.log(event.target)
 
     if (checkedName) {
       setIsSubmitted(true)
@@ -73,24 +76,31 @@ export default function Page() {
     }
   }
 
+  const handleNextAnswer = () => {
+    setQuestionNumber((questionNumber) => questionNumber + 110)
+    setCheckedName("")
+  }
+
   return (
     <Fragment>
       {filteredQuiz.map((quiz: QuizProps) => {
         const { questions } = quiz
+        console.log("QUESTIONS", questions)
 
         return (
           <Fragment key={quiz.title}>
             <Header subject={quiz.title} />
-            <main className="row-start-2 row-end-3 overflow-hidden px-[1.5em] pt-[2em]">
+            <main className="relative row-start-2 row-end-3 overflow-hidden px-[1.5em] pt-[2em]">
               {questions.map((question: QuestionProps, index: number) => {
                 const { options, answer } = question
 
                 return (
                   <div
                     key={index}
-                    className="grid w-full grid-rows-subgrid gap-[2.5em]"
+                    className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em]"
                     style={{
-                      transform: `translate(calc(110%*${index}), calc(100%*(-${index})))`
+                      left: `calc((110%*${index}) - ${questionNumber}%)`,
+                      padding: "inherit"
                     }}
                   >
                     <div className="question-info grid gap-[0.75em]">
@@ -119,7 +129,7 @@ export default function Page() {
                             <label
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
-                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] transition duration-300 ${checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : "border-transparent"} cursor-pointer ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
+                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] transition duration-300 ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : "border-transparent"} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
                               key={index}
                             >
                               <input
@@ -127,7 +137,7 @@ export default function Page() {
                                 id={`option-${index + 1}`}
                                 name={`option-${index + 1}`}
                                 before-dynamic-value={letter}
-                                className={`letter relative inline-block h-[40px] w-[40px] appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] transition duration-300 before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] ${checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)]" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)]" : ""}`}
+                                className={`letter relative inline-block h-[40px] w-[40px] appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] transition duration-100 before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] ${checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)]" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)]" : ""}`}
                                 onChange={handleChange}
                                 disabled={isSubmitted}
                               />
@@ -161,14 +171,29 @@ export default function Page() {
                           )
                         })}
                       </div>
-                      <button
-                        type="submit"
-                        className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)]"
-                      >
-                        {isSubmitted && checkedName
-                          ? "Next answer"
-                          : "Submit answer"}
-                      </button>
+
+                      {isSubmitted && checkedName ? (
+                        <button
+                          type="submit"
+                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)]"
+                          onClick={handleNextAnswer}
+                        >
+                          Next Question
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)]"
+                        >
+                          Submit answer
+                        </button>
+                      )}
+                      {isSubmitted && index === 9 ? (
+                        <Link href="/results">View Results</Link>
+                      ) : (
+                        ""
+                      )}
+
                       {isSubmitted && !checkedName ? <span>yes</span> : ""}
                     </form>
                   </div>
