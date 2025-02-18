@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { create } from "../../actions"
 import { generateLetter } from "../../utils/generateLetter"
 import { useSearchParams } from "next/navigation"
+import { navigate } from "../../actions"
 
 import {
   useState,
@@ -13,7 +15,6 @@ import {
 } from "react"
 import Header from "@/app/components/Header"
 import Image from "next/image"
-import Link from "next/link"
 
 interface DataProps {
   title: string
@@ -43,6 +44,7 @@ export default function Page() {
   const [checkedName, setCheckedName] = useState<string>("")
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
+  const [qNumber, setQNumber] = useState<number>(0)
 
   const searchParams = useSearchParams()
   const search = searchParams.get("title")
@@ -57,7 +59,7 @@ export default function Page() {
     quizData()
   }, [])
 
-  const filteredQuiz = data.filter((d: DataProps) => {
+  const filteredQuiz: any = data.filter((d: DataProps) => {
     return d.title === search
   })
 
@@ -67,7 +69,6 @@ export default function Page() {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault()
-    console.log(event.target)
 
     if (checkedName) {
       setIsSubmitted(true)
@@ -78,14 +79,24 @@ export default function Page() {
 
   const handleNextAnswer = () => {
     setQuestionNumber((questionNumber) => questionNumber + 110)
+    setQNumber((qNumber) => qNumber + 1)
     setCheckedName("")
   }
+
+  let showRes = false
+
+  useEffect(() => {
+    if (isSubmitted && qNumber === 9) {
+      console.log("Yes", filteredQuiz[0].title)
+      showRes = true
+      navigate(filteredQuiz[0].title)
+    }
+  }, [showRes, isSubmitted])
 
   return (
     <Fragment>
       {filteredQuiz.map((quiz: QuizProps) => {
         const { questions } = quiz
-        console.log("QUESTIONS", questions)
 
         return (
           <Fragment key={quiz.title}>
@@ -188,13 +199,6 @@ export default function Page() {
                           Submit answer
                         </button>
                       )}
-                      {isSubmitted && index === 9 ? (
-                        <Link href="/results">View Results</Link>
-                      ) : (
-                        ""
-                      )}
-
-                      {isSubmitted && !checkedName ? <span>yes</span> : ""}
                     </form>
                   </div>
                 )
