@@ -45,6 +45,8 @@ export default function Page() {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [qNumber, setQNumber] = useState<number>(0)
+  const [rightAnswer, setRightAnswer] = useState<number>(0)
+  const [value, setValue] = useState<string>("")
 
   const searchParams = useSearchParams()
   const search = searchParams.get("title")
@@ -63,15 +65,20 @@ export default function Page() {
     return d.title === search
   })
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCheckedName(event.target.name)
+  const handleChange = (event: ChangeEvent<HTMLLabelElement>) => {
+    setValue(event.target.nextSibling?.nodeValue as string)
+    setCheckedName(event.target.id)
   }
 
-  const handleSubmit = (event: SyntheticEvent) => {
+  const handleSubmit = (event: SyntheticEvent, answer: string) => {
     event.preventDefault()
 
     if (checkedName) {
       setIsSubmitted(true)
+      if (value === answer) {
+        setRightAnswer((prevValue) => prevValue + 1)
+        setValue("")
+      }
     } else {
       setIsSubmitted(false)
     }
@@ -87,9 +94,8 @@ export default function Page() {
 
   useEffect(() => {
     if (isSubmitted && qNumber === 9) {
-      console.log("Yes", filteredQuiz[0].title)
       showRes = true
-      navigate(filteredQuiz[0].title)
+      navigate(filteredQuiz[0].title, rightAnswer)
     }
   }, [showRes, isSubmitted])
 
@@ -131,13 +137,17 @@ export default function Page() {
                         ></div>
                       </div>
                     </div>
-                    <form className="answers" onSubmit={handleSubmit}>
+                    <form
+                      className="answers"
+                      onSubmit={(event) => handleSubmit(event, answer)}
+                    >
                       <div className="fe-quiz-subject-list">
                         {options.map((option: string, index: number) => {
                           const letter = generateLetter(index)
 
                           return (
                             <label
+                              onChange={handleChange}
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
                               className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] transition duration-300 ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : "border-transparent"} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
@@ -146,11 +156,13 @@ export default function Page() {
                               <input
                                 type="radio"
                                 id={`option-${index + 1}`}
-                                name={`option-${index + 1}`}
+                                name={`option`}
                                 before-dynamic-value={letter}
                                 className={`letter relative inline-block h-[40px] w-[40px] appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] transition duration-100 before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] ${checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)]" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)]" : ""}`}
-                                onChange={handleChange}
                                 disabled={isSubmitted}
+                                defaultChecked={
+                                  checkedName === `option-${index + 1}`
+                                }
                               />
                               {option}
                               {isSubmitted &&

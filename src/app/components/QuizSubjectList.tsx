@@ -13,7 +13,7 @@ export default async function QuizSubjectList() {
   return (
     <ul className="fe-quiz-subject-list">
       {quizzes.map((quiz: QuizProps) => {
-        console.log(quiz)
+        // console.log(quiz)
         return (
           <>
             <li

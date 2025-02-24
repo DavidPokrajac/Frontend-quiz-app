@@ -10,6 +10,6 @@ export async function create() {
   return data
 }
 
-export async function navigate(data: string) {
-  redirect(`/results/?quiz=${data}`)
+export async function navigate(data: string, rightAnswers: number) {
+  redirect(`/results/?quiz=${data}&rightAnswers=${rightAnswers}`)
 }
