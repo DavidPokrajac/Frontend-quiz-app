@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { create } from "../../actions"
@@ -47,6 +46,7 @@ export default function Page() {
   const [qNumber, setQNumber] = useState<number>(0)
   const [rightAnswer, setRightAnswer] = useState<number>(0)
   const [value, setValue] = useState<string>("")
+  const [errorMessage, setErrorMessage] = useState<string>("")
 
   const searchParams = useSearchParams()
   const search = searchParams.get("title")
@@ -61,7 +61,7 @@ export default function Page() {
     quizData()
   }, [])
 
-  const filteredQuiz: any = data.filter((d: DataProps) => {
+  const filteredQuiz: Array<QuizProps> = data.filter((d: DataProps) => {
     return d.title === search
   })
 
@@ -75,12 +75,18 @@ export default function Page() {
 
     if (checkedName) {
       setIsSubmitted(true)
+      setValue("")
+      setErrorMessage("")
+
       if (value === answer) {
         setRightAnswer((prevValue) => prevValue + 1)
         setValue("")
+        setErrorMessage("")
       }
     } else {
       setIsSubmitted(false)
+      setValue("")
+      setErrorMessage("Please select an answer")
     }
   }
 
@@ -212,8 +218,18 @@ export default function Page() {
                         </button>
                       )}
 
-                      {isSubmitted && checkedName === "" ? (
-                        <span>Please select an answer</span>
+                      {value === "" && errorMessage !== "" ? (
+                        <div className="error-message flex items-center justify-center gap-[0.5rem] transition duration-75">
+                          <Image
+                            src="/images/icon-incorrect.svg"
+                            alt=""
+                            width={32}
+                            height={32}
+                          />
+                          <span className="text-center text-[1.125rem] text-[var(--clr-medium-red)]">
+                            {errorMessage}
+                          </span>
+                        </div>
                       ) : (
                         ""
                       )}

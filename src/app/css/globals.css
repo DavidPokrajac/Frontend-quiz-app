@@ -19,3 +19,9 @@ progress[value]::-webkit-progress-value {
   border-radius: 100vw;
   background-color: orange;
 }
+
+body {
+  background-image: url("/images/pattern-background-mobile-light.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
