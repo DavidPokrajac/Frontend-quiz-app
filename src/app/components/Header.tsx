@@ -2,7 +2,7 @@ import Image from "next/image"
 import { linkBgColor } from "../utils/linkBgColor"
 
 interface HeaderProps {
-  subject: string
+  subject?: string
 }
 
 export default function Header({ subject }: HeaderProps) {
@@ -14,7 +14,8 @@ export default function Header({ subject }: HeaderProps) {
       {subject && (
         <div className="flex items-center gap-[1em]">
           <span
-            className={`bg-[${linkColor}] inline-block h-[40px] w-[40px] content-center`}
+            className={`inline-block h-[40px] w-[40px] content-center rounded-[4px]`}
+            style={{ background: linkColor }}
           >
             <Image
               src={`/images/icon-${subject?.toLowerCase()}.svg`}

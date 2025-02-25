@@ -150,7 +150,7 @@ export default function Page() {
                               onChange={handleChange}
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
-                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] transition duration-300 ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : "border-transparent"} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
+                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 checked:ease-in-out ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
                               key={index}
                             >
                               <input
@@ -158,7 +158,7 @@ export default function Page() {
                                 id={`option-${index + 1}`}
                                 name={`option`}
                                 before-dynamic-value={letter}
-                                className={`letter relative inline-block h-[40px] w-[40px] appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] transition duration-100 before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] ${checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)]" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)]" : ""}`}
+                                className={`letter relative inline-block h-[40px] w-[40px] appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] checked:transition checked:duration-150 checked:ease-in-out ${isSubmitted === false && checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)] text-white" : ""}`}
                                 disabled={isSubmitted}
                                 defaultChecked={
                                   checkedName === `option-${index + 1}`
@@ -210,6 +210,12 @@ export default function Page() {
                         >
                           Submit answer
                         </button>
+                      )}
+
+                      {isSubmitted && checkedName === "" ? (
+                        <span>Please select an answer</span>
+                      ) : (
+                        ""
                       )}
                     </form>
                   </div>
