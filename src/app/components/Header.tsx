@@ -9,7 +9,7 @@ export default function Header({ subject }: HeaderProps) {
   const linkColor = linkBgColor(subject)["bgColor"]
   return (
     <header
-      className={`row-start-1 row-end-2 flex ${!subject ? "justify-end" : "justify-between"} items-center gap-[0.5em] px-[1em] py-[1.5em]`}
+      className={`row-start-1 row-end-2 flex ${!subject ? "justify-end" : "justify-between"} items-center gap-[0.5em] px-[1em] py-[1.5em] lg:px-[0] lg:pb-[100px] lg:pt-0`}
     >
       {subject && (
         <div className="flex items-center gap-[1em]">

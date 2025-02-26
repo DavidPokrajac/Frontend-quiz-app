@@ -8,6 +8,7 @@ import { navigate } from "../../actions"
 import {
   useState,
   useEffect,
+  useRef,
   Fragment,
   ChangeEvent,
   SyntheticEvent
@@ -47,6 +48,8 @@ export default function Page() {
   const [rightAnswer, setRightAnswer] = useState<number>(0)
   const [value, setValue] = useState<string>("")
   const [errorMessage, setErrorMessage] = useState<string>("")
+
+  const radioInput = useRef<HTMLInputElement>(null)
 
   const searchParams = useSearchParams()
   const search = searchParams.get("title")
@@ -120,13 +123,13 @@ export default function Page() {
                 return (
                   <div
                     key={index}
-                    className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em]"
+                    className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em] lg:grid-cols-[1fr_1fr] lg:gap-[3.5em]"
                     style={{
                       left: `calc((110%*${index}) - ${questionNumber}%)`,
                       padding: "inherit"
                     }}
                   >
-                    <div className="question-info grid gap-[0.75em]">
+                    <div className="question-info grid gap-[0.75em] lg:grid-rows-[min-content_250px_auto]">
                       <p className="text-[0.875rem] italic leading-[1.5] text-[var(--clr-grey-500)]">
                         Question {index + 1} of {questions.length}
                       </p>
@@ -160,6 +163,7 @@ export default function Page() {
                               key={index}
                             >
                               <input
+                                ref={radioInput}
                                 type="radio"
                                 id={`option-${index + 1}`}
                                 name={`option`}

@@ -18,7 +18,7 @@ export default async function QuizSubjectList() {
           <>
             <li
               key={quiz.title}
-              className="flex items-center gap-[0.8889em] rounded-[0.6667em] bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)]"
+              className="flex items-center gap-[0.8889em] rounded-[0.6667em] bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] lg:text-[1.75rem]"
             >
               <Link
                 href={{
@@ -30,7 +30,7 @@ export default async function QuizSubjectList() {
                 className="flex w-full items-center gap-[0.8889em]"
               >
                 <span
-                  className={`inline-flex h-[40px] w-[40px] items-center justify-center rounded-[0.25em] bg-[${linkBgColor(quiz.title)["bgColor"]}]`}
+                  className={`inline-flex h-[40px] w-[40px] items-center justify-center rounded-[0.25em] lg:h-[56px] lg:w-[56px] bg-[${linkBgColor(quiz.title)["bgColor"]}]`}
                   style={{
                     backgroundColor: linkBgColor(quiz.title)["bgColor"]
                   }}
