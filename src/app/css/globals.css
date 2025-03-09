@@ -20,6 +20,13 @@ progress[value]::-webkit-progress-value {
   background-color: orange;
 }
 
+label:hover input:not(:checked) {
+  color: var(--clr-purple);
+  background-color: hsl(278, 100%, 95%);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
 body {
   background-image: url("/images/pattern-background-mobile-light.svg");
   background-repeat: no-repeat;

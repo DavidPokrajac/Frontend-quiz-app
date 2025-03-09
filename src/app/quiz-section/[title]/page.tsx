@@ -76,6 +76,8 @@ export default function Page() {
   const handleSubmit = (event: SyntheticEvent, answer: string) => {
     event.preventDefault()
 
+    setErrorMessage("")
+
     if (checkedName) {
       setIsSubmitted(true)
       setValue("")
@@ -97,6 +99,7 @@ export default function Page() {
     setQuestionNumber((questionNumber) => questionNumber + 110)
     setQNumber((qNumber) => qNumber + 1)
     setCheckedName("")
+    setErrorMessage("")
   }
 
   let showRes = false
@@ -159,7 +162,7 @@ export default function Page() {
                               onChange={handleChange}
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
-                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 checked:ease-in-out ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
+                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 checked:ease-in-out ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
                               key={index}
                             >
                               <input
@@ -207,8 +210,7 @@ export default function Page() {
 
                       {isSubmitted && checkedName ? (
                         <button
-                          type="submit"
-                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)]"
+                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)]"
                           onClick={handleNextAnswer}
                         >
                           Next Question
@@ -216,13 +218,15 @@ export default function Page() {
                       ) : (
                         <button
                           type="submit"
-                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)]"
+                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)]"
                         >
                           Submit answer
                         </button>
                       )}
 
-                      {value === "" && errorMessage !== "" ? (
+                      {isSubmitted === false &&
+                      value === "" &&
+                      errorMessage !== "" ? (
                         <div className="error-message flex items-center justify-center gap-[0.5rem] transition duration-75">
                           <Image
                             src="/images/icon-incorrect.svg"
