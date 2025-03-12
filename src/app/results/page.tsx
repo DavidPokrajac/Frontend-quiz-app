@@ -50,7 +50,7 @@ export default function Results() {
           </div>
           <button
             onClick={() => router.push("/")}
-            className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] lg:mt-[1.1429em] lg:text-[1.75rem]"
+            className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] lg:mt-[1.1429em] lg:text-[1.75rem]"
           >
             Play again
           </button>
