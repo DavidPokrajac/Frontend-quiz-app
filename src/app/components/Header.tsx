@@ -47,7 +47,7 @@ export default function Header({ subject }: HeaderProps) {
               className="mx-auto"
             />
           </span>
-          <h3 className="text-[1.25rem] font-semibold text-[var(--clr-grey-700)] lg:text-[1.75rem]">
+          <h3 className="text-[1.25rem] font-semibold text-[var(--clr-grey-700)] lg:text-[1.75rem] dark:text-[var(--clr-white)]">
             {subject}
           </h3>
         </div>
