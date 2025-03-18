@@ -7,13 +7,13 @@ export default function Home() {
       <Header />
       <main className="row-start-2 row-end-3 grid grid-rows-[auto_1fr] gap-[2.5em] px-[1.5em] pt-[2em] md:gap-[4em] md:px-[3em] lg:grid-cols-[1fr_1fr] lg:grid-rows-[auto] lg:px-[0]">
         <div className="intro text-balance">
-          <h1 className="mb-[0.4em] text-[2.5rem] font-light md:text-[4rem]">
+          <h1 className="mb-[0.4em] text-[2.5rem] font-light md:text-[4rem] dark:text-[var(--clr-white)]">
             Welcome to the{" "}
-            <strong className="block font-bold text-[var(--clr-grey-700)]">
+            <strong className="block font-bold text-[var(--clr-grey-700)] dark:text-[var(--clr-white)]">
               Frontend Quiz!
             </strong>
           </h1>
-          <p className="text-[0.875rem] italic leading-[1.5] text-[var(--clr-grey-500)] md:text-[1.25rem]">
+          <p className="text-[0.875rem] italic leading-[1.5] text-[var(--clr-grey-500)] md:text-[1.25rem] dark:text-[var(--clr-grey-400)]">
             Pick a subject to get started.
           </p>
         </div>

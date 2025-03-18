@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${rubik.className} body grid h-screen grid-cols-[1fr] grid-rows-[min-content_1fr] overflow-hidden bg-[var(--clr-grey-300)] antialiased lg:px-[140px] lg:py-[100px]`}
+        className={`${rubik.className} body grid h-screen grid-cols-[1fr] grid-rows-[min-content_1fr] overflow-hidden bg-[var(--clr-grey-300)] antialiased transition duration-1000 ease-in-out lg:px-[140px] lg:py-[100px] dark:bg-[var(--clr-grey-700)]`}
       >
         {children}
       </body>

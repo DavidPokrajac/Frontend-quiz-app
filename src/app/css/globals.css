@@ -33,12 +33,20 @@ body {
   background-size: cover;
 }
 
+:where(html[class="dark"]) body {
+  background-image: url("/images/pattern-background-mobile-dark.svg");
+}
+
 @media (min-width: 768px) {
   body {
     background-image: url("/images/pattern-background-tablet-light.svg");
     background-position: left -250px top -300px;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+
+  :where(html[class="dark"]) body {
+    background-image: url("/images/pattern-background-tablet-dark.svg");
   }
 }
 
@@ -48,5 +56,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+  }
+
+  :where(html[class="dark"]) body {
+    background-image: url("/images/pattern-background-desktop-dark.svg");
   }
 }

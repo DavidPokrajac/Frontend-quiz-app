@@ -17,7 +17,7 @@ export default async function QuizSubjectList() {
           <>
             <li
               key={quiz.title}
-              className="flex items-center gap-[0.8889em] rounded-[0.6667em] bg-[var(--clr-white)] px-[0.4286em] py-[0.4286em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] md:text-[1.75rem] lg:px-[0.72em] lg:py-[0.72em]"
+              className="flex items-center gap-[0.8889em] rounded-[0.6667em] bg-[var(--clr-white)] px-[0.4286em] py-[0.4286em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] md:text-[1.75rem] lg:px-[0.72em] lg:py-[0.72em] dark:bg-[var(--clr-grey-600)] dark:text-[var(--clr-white)]"
             >
               <Link
                 href={{
