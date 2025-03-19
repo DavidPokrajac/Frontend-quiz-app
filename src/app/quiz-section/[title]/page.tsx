@@ -133,14 +133,14 @@ export default function Page() {
                     }}
                   >
                     <div className="question-info grid gap-[0.75em] lg:grid-rows-[min-content_250px_auto]">
-                      <p className="text-[0.875rem] italic leading-[1.5] text-[var(--clr-grey-500)] md:text-[1.25rem]">
+                      <p className="text-[0.875rem] italic leading-[1.5] text-[var(--clr-grey-500)] md:text-[1.25rem] dark:text-[var(--clr-grey-400)]">
                         Question {index + 1} of {questions.length}
                       </p>
-                      <p className="mt-[0.6em] text-[1.25rem] font-bold leading-[1.2] text-[var(--clr-grey-700)] md:text-[2.25rem]">
+                      <p className="mt-[0.6em] text-[1.25rem] font-bold leading-[1.2] text-[var(--clr-grey-700)] md:text-[2.25rem] dark:text-[var(--clr-white)]">
                         {question.question}
                       </p>
 
-                      <div className="mt-[0.75em] h-[16px] w-full rounded-full bg-[var(--clr-white)] p-[4px]">
+                      <div className="mt-[0.75em] h-[16px] w-full rounded-full bg-[var(--clr-white)] p-[4px] dark:bg-[var(--clr-grey-600)]">
                         <div
                           className="h-[8px] rounded-full bg-[var(--clr-purple)]"
                           style={{
@@ -162,7 +162,7 @@ export default function Page() {
                               onChange={handleChange}
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
-                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 checked:ease-in-out md:text-[1.75rem] ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
+                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 checked:ease-in-out md:text-[1.75rem] dark:bg-[var(--clr-grey-600)] dark:text-[var(--clr-white)] ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
                               key={index}
                             >
                               <input
@@ -186,6 +186,7 @@ export default function Page() {
                                   alt=""
                                   height={24}
                                   width={24}
+                                  className="lg:h-[30px] lg:w-[30px]"
                                 />
                               ) : (
                                 ""
@@ -199,6 +200,7 @@ export default function Page() {
                                   alt=""
                                   height={24}
                                   width={24}
+                                  className="lg:h-[30px] lg:w-[30px]"
                                 />
                               ) : (
                                 ""
@@ -210,7 +212,7 @@ export default function Page() {
 
                       {isSubmitted && checkedName ? (
                         <button
-                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
+                          className="] mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
                           onClick={handleNextAnswer}
                         >
                           Next Question
