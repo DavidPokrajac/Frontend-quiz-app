@@ -52,3 +52,7 @@ body {
     background-image: url("/images/pattern-background-desktop-dark.svg");
   }
 }
+
+label {
+  font-size: clamp(1.125rem, 0.7rem + 1vw, 1.75rem);
+}

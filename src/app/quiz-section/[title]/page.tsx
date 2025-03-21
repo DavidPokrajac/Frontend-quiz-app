@@ -4,6 +4,8 @@ import { create } from "../../actions"
 import { generateLetter } from "../../utils/generateLetter"
 import { useSearchParams } from "next/navigation"
 import { navigate } from "../../actions"
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react"
 
 import {
   useState,
@@ -39,6 +41,8 @@ interface QuestionProps {
   options: string[]
 }
 
+gsap.registerPlugin(useGSAP)
+
 export default function Page() {
   const [data, setData] = useState([])
   const [checkedName, setCheckedName] = useState<string>("")
@@ -63,6 +67,36 @@ export default function Page() {
     }
     quizData()
   }, [])
+
+  useGSAP(() => {
+    if (isSubmitted) {
+      const tl = gsap.timeline({ repeat: 1, repeatDelay: 0 })
+
+      tl.to("label[class*='var(--clr-medium-red)']", {
+        rotation: 2.5,
+        transformOrigin: "center center",
+        duration: 0.15
+      })
+      tl.to("label[class*='var(--clr-medium-red)']", {
+        rotation: 0,
+        transformOrigin: "center center",
+        duration: 0.15
+      })
+
+      const tlCorrect = gsap.timeline({ repeat: 0, repeatDelay: 0 })
+
+      tlCorrect.to("label[class*='var(--clr-light-green)']", {
+        scale: 1.05,
+        transformOrigin: "center center",
+        duration: 0.5
+      })
+      tlCorrect.to("label[class*='var(--clr-light-green)']", {
+        scale: 1,
+        transformOrigin: "center center",
+        duration: 0.5
+      })
+    }
+  }, [isSubmitted])
 
   const filteredQuiz: Array<QuizProps> = data.filter((d: DataProps) => {
     return d.title === search
@@ -119,14 +153,14 @@ export default function Page() {
         return (
           <Fragment key={quiz.title}>
             <Header subject={quiz.title} />
-            <main className="relative row-start-2 row-end-3 overflow-hidden px-[1.5em] pt-[2em]">
+            <main className="relative row-start-2 row-end-3 px-[1.5em] pt-[2em] md:px-[3em] lg:px-0">
               {questions.map((question: QuestionProps, index: number) => {
                 const { options, answer } = question
 
                 return (
                   <div
                     key={index}
-                    className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em] lg:grid-cols-[1fr_1fr] lg:gap-[3.5em]"
+                    className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em] lg:grid-cols-[repeat(2,_45%)] lg:gap-[10%]"
                     style={{
                       left: `calc((110%*${index}) - ${questionNumber}%)`,
                       padding: "inherit"
@@ -162,7 +196,7 @@ export default function Page() {
                               onChange={handleChange}
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
-                              className={`grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[0.6667em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] text-[1.125rem] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 checked:ease-in-out md:text-[1.75rem] dark:bg-[var(--clr-grey-600)] dark:text-[var(--clr-white)] ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
+                              className={`label checked:ease-in-out] relative z-20 grid grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[1em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 md:grid-cols-[56px_1fr_56px] dark:bg-[var(--clr-grey-600)] dark:text-[var(--clr-white)] ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
                               key={index}
                             >
                               <input
@@ -212,7 +246,7 @@ export default function Page() {
 
                       {isSubmitted && checkedName ? (
                         <button
-                          className="] mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
+                          className="] mt-[0.6667em] block w-full rounded-[1em] bg-[var(--clr-purple)] py-[1em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
                           onClick={handleNextAnswer}
                         >
                           Next Question
@@ -220,7 +254,7 @@ export default function Page() {
                       ) : (
                         <button
                           type="submit"
-                          className="mt-[0.6667em] block w-full rounded-[0.6667em] bg-[var(--clr-purple)] py-[0.6667em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
+                          className="mt-[0.6667em] block w-full rounded-[1em] bg-[var(--clr-purple)] py-[1em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
                         >
                           Submit answer
                         </button>
