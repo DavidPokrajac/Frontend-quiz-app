@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { linkBgColor } from "../utils/linkBgColor"
+import { subjectTitle } from "../utils/subjectTitle"
 
 interface HeaderProps {
   subject?: string
@@ -40,7 +41,7 @@ export default function Header({ subject }: HeaderProps) {
             style={{ background: linkColor }}
           >
             <Image
-              src={`/images/icon-${subject?.toLowerCase()}.svg`}
+              src={`/images/icon-${subjectTitle(subject?.toLowerCase())}.svg`}
               alt=""
               width={29}
               height={29}
