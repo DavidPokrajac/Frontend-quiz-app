@@ -10,10 +10,10 @@ export default async function QuizSubjectList() {
 
   return (
     <ul className="fe-quiz-subject-list">
-      {quizzes.map((quiz: QuizProps) => {
+      {quizzes.map((quiz: QuizProps, index: number) => {
         return (
           <>
-            <QuizSubjectItem quiz={quiz} />
+            <QuizSubjectItem quiz={quiz} index={index} />
           </>
         )
       })}

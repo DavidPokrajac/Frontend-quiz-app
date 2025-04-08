@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-.quiz-item {
-  transition: all 0.2s ease-in-out;
+.intro {
+  transform: translateX(-200px);
+  opacity: 0;
 }
 
-.quiz-item:hover {
-  transform: translateY(-10px);
+.item {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.item:hover {
   box-shadow: 0 10px 0 0 var(--clr-grey-400);
 }
 
-:where(html[class="dark"]) .quiz-item:hover {
+:where(html[class="dark"]) .item:hover {
   box-shadow: 0 10px 0 0 var(--clr-grey-500);
 }
 
