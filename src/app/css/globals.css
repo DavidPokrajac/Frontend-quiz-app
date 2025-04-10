@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.intro {
+.result-wrapper {
+  transform: translateX(150%);
+}
+
+.intro,
+.results-outro {
   transform: translateX(-200px);
   opacity: 0;
 }

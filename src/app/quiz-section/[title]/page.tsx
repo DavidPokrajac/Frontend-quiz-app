@@ -145,6 +145,14 @@ export default function Page() {
     }
   }, [showRes, isSubmitted])
 
+  useGSAP(() => {
+    gsap.to(".prog", {
+      width: (qNumber + 1) * 10 + "%",
+      ease: "power3.out",
+      duration: 0.75
+    })
+  }, [qNumber])
+
   return (
     <Fragment>
       {filteredQuiz.map((quiz: QuizProps) => {
@@ -175,12 +183,7 @@ export default function Page() {
                       </p>
 
                       <div className="mt-[0.75em] h-[16px] w-full rounded-full bg-[var(--clr-white)] p-[4px] dark:bg-[var(--clr-grey-600)]">
-                        <div
-                          className="h-[8px] rounded-full bg-[var(--clr-purple)]"
-                          style={{
-                            width: `${((index + 1) / questions.length) * 100}%`
-                          }}
-                        ></div>
+                        <div className="prog h-[8px] w-[10%] rounded-full bg-[var(--clr-purple)]"></div>
                       </div>
                     </div>
                     <form
