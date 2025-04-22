@@ -36,7 +36,7 @@ export default function ResultSummary({
       },
       {
         scale: 1,
-        duration: 0.75,
+        duration: 1.25,
         ease: "steps(6)",
         delay: 1
       }
@@ -81,7 +81,7 @@ export default function ResultSummary({
           <span className="right-answers block text-[5.5rem] font-bold text-[var(--clr-grey-700)] lg:text-[9rem] dark:text-[var(--clr-white)]">
             {rightAnswers}
           </span>{" "}
-          out of 10
+          <span className="out-of-ten">out of 10</span>
         </p>
       </div>
       <button
