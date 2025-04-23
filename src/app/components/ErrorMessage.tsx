@@ -3,7 +3,6 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import Image from "next/image"
-import { useRef } from "react"
 
 gsap.registerPlugin(useGSAP)
 
@@ -18,7 +17,6 @@ export default function ErrorMessage({
   submitIsClicked,
   checkedName
 }: ErrorMessageProps) {
-  const errorRef = useRef(null)
   useGSAP(() => {
     if (submitIsClicked && !checkedName) {
       gsap.to(".error-message", {
@@ -36,10 +34,7 @@ export default function ErrorMessage({
     }
   }, [submitIsClicked, checkedName])
   return (
-    <div
-      ref={errorRef}
-      className="error-message flex items-center justify-center gap-[0.5rem]"
-    >
+    <div className="error-message flex items-center justify-center gap-[0.5rem]">
       <Image src="/images/icon-incorrect.svg" alt="" width={32} height={32} />
       <span className="text-center text-[1.125rem] text-[var(--clr-medium-red)]">
         {errorMessage}

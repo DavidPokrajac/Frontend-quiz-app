@@ -10,13 +10,16 @@ interface HeaderProps {
 }
 
 export default function Header({ subject }: HeaderProps) {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("color-theme") || "light"
-  )
+  const [theme, setTheme] = useState<string>("")
 
   function handleChange() {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"))
   }
+
+  useEffect(() => {
+    const savedValue = localStorage.getItem("color-theme")
+    setTheme(savedValue ? savedValue : "light")
+  }, [])
 
   useEffect(() => {
     localStorage.setItem("color-theme", theme)
