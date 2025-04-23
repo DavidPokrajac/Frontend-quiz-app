@@ -16,6 +16,7 @@ import {
   SyntheticEvent
 } from "react"
 import Header from "@/app/components/Header"
+import ErrorMessage from "@/app/components/ErrorMessage"
 import Image from "next/image"
 
 interface DataProps {
@@ -52,8 +53,10 @@ export default function Page() {
   const [rightAnswer, setRightAnswer] = useState<number>(0)
   const [value, setValue] = useState<string>("")
   const [errorMessage, setErrorMessage] = useState<string>("")
+  const [submitIsClicked, setSubmitIsClicked] = useState<boolean>(false)
 
   const radioInput = useRef<HTMLInputElement>(null)
+  const { contextSafe } = useGSAP()
 
   const searchParams = useSearchParams()
   const search = searchParams.get("title")
@@ -103,19 +106,22 @@ export default function Page() {
   })
 
   const handleChange = (event: ChangeEvent<HTMLLabelElement>) => {
+    setIsSubmitted(false)
+    setSubmitIsClicked(false)
     setValue(event.target.nextSibling?.nodeValue as string)
     setCheckedName(event.target.id)
+    console.log("Hi")
   }
 
-  const handleSubmit = (event: SyntheticEvent, answer: string) => {
+  const handleSubmit = contextSafe((event: SyntheticEvent, answer: string) => {
     event.preventDefault()
 
     setErrorMessage("")
+    setSubmitIsClicked(true)
 
     if (checkedName) {
       setIsSubmitted(true)
       setValue("")
-      setErrorMessage("")
 
       if (value === answer) {
         setRightAnswer((prevValue) => prevValue + 1)
@@ -123,17 +129,18 @@ export default function Page() {
         setErrorMessage("")
       }
     } else {
-      setIsSubmitted(false)
       setValue("")
       setErrorMessage("Please select an answer")
     }
-  }
+  })
 
   const handleNextAnswer = () => {
     setQuestionNumber((questionNumber) => questionNumber + 110)
     setQNumber((qNumber) => qNumber + 1)
     setCheckedName("")
     setErrorMessage("")
+    setSubmitIsClicked(false)
+    setIsSubmitted(false)
   }
 
   let showRes = false
@@ -186,10 +193,7 @@ export default function Page() {
                         <div className="prog h-[8px] w-[10%] rounded-full bg-[var(--clr-purple)]"></div>
                       </div>
                     </div>
-                    <form
-                      className="answers"
-                      onSubmit={(event) => handleSubmit(event, answer)}
-                    >
+                    <div className="answers">
                       <div className="fe-quiz-subject-list">
                         {options.map((option: string, index: number) => {
                           const letter = generateLetter(index)
@@ -199,7 +203,7 @@ export default function Page() {
                               onChange={handleChange}
                               htmlFor={`option-${index + 1}`}
                               data-index={`option-${index + 1}`}
-                              className={`label checked:ease-in-out] relative z-20 grid cursor-pointer grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[1em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] font-bold text-[var(--clr-grey-700)] checked:transition checked:duration-150 md:grid-cols-[56px_1fr_56px] dark:bg-[var(--clr-grey-600)] dark:text-[var(--clr-white)] ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
+                              className={`label relative z-20 grid cursor-pointer grid-cols-[40px_1fr_40px] grid-rows-[auto] items-center gap-[0.8889em] rounded-[1em] border-[3px] border-solid bg-[var(--clr-white)] px-[0.6667em] py-[0.6667em] font-bold text-[var(--clr-grey-700)] md:grid-cols-[56px_1fr_56px] dark:bg-[var(--clr-grey-600)] dark:text-[var(--clr-white)] ${checkedName !== `option-${index + 1}` ? "border-transparent" : ""} ${isSubmitted === false && checkedName === `option-${index + 1}` ? "border-[var(--clr-purple)]" : ""} cursor-pointer ${isSubmitted === true && checkedName === `option-${index + 1}` && option === answer ? "border-[var(--clr-light-green)]" : ""} ${isSubmitted === true && checkedName === `option-${index + 1}` && option !== answer ? "border-[var(--clr-medium-red)]" : ""}`}
                               key={index}
                             >
                               <input
@@ -208,7 +212,7 @@ export default function Page() {
                                 id={`option-${index + 1}`}
                                 name={`option`}
                                 before-dynamic-value={letter}
-                                className={`letter relative inline-block h-[40px] w-[40px] cursor-pointer appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] checked:transition checked:duration-150 checked:ease-in-out md:h-[56px] md:w-[56px] md:before:text-[1.75rem] ${isSubmitted === false && checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)] text-white" : ""}`}
+                                className={`letter checked:duration-350 relative inline-block h-[40px] w-[40px] cursor-pointer appearance-none rounded-[0.3333em] bg-[var(--clr-grey-300)] text-center text-[1.125rem] uppercase text-[var(--clr-grey-500)] before:absolute before:inset-0 before:content-center before:content-[attr(before-dynamic-value)] checked:transition checked:ease-in-out md:h-[56px] md:w-[56px] md:before:text-[1.75rem] ${isSubmitted === false && checkedName === `option-${index + 1}` ? "bg-[var(--clr-purple)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option === answer ? "bg-[var(--clr-light-green)] text-white" : ""} ${isSubmitted && checkedName === `option-${index + 1}` && option !== answer ? "bg-[var(--clr-medium-red)] text-white" : ""}`}
                                 disabled={isSubmitted}
                                 defaultChecked={
                                   checkedName === `option-${index + 1}`
@@ -249,36 +253,26 @@ export default function Page() {
 
                       {isSubmitted && checkedName ? (
                         <button
-                          className="] mt-[0.6667em] block w-full rounded-[1em] bg-[var(--clr-purple)] py-[1em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
+                          className="mt-[0.6667em] block w-full rounded-[1em] bg-[var(--clr-purple)] py-[1em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
                           onClick={handleNextAnswer}
                         >
                           Next Question
                         </button>
                       ) : (
                         <button
-                          type="submit"
                           className="mt-[0.6667em] block w-full rounded-[1em] bg-[var(--clr-purple)] py-[1em] text-center text-[1.125rem] font-semibold text-[var(--clr-white)] transition duration-100 ease-in-out hover:bg-[hsl(277_91%_56%_/0.5)] md:text-[1.75rem]"
+                          onClick={(event) => handleSubmit(event, answer)}
                         >
                           Submit answer
                         </button>
                       )}
 
-                      {isSubmitted === false && value === "" ? (
-                        <div className="error-message flex items-center justify-center gap-[0.5rem] transition duration-75">
-                          <Image
-                            src="/images/icon-incorrect.svg"
-                            alt=""
-                            width={32}
-                            height={32}
-                          />
-                          <span className="text-center text-[1.125rem] text-[var(--clr-medium-red)]">
-                            {errorMessage}
-                          </span>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </form>
+                      <ErrorMessage
+                        errorMessage={errorMessage}
+                        submitIsClicked={submitIsClicked}
+                        checkedName={checkedName}
+                      />
+                    </div>
                   </div>
                 )
               })}

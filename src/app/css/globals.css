@@ -32,11 +32,20 @@ progress {
   appearance: none;
 }
 
-label:hover input:not(:checked) {
+label:hover input:not([checked]) {
   color: var(--clr-purple);
   background-color: hsl(278, 100%, 95%);
   cursor: pointer;
   transition: all 0.1s ease-in-out;
+}
+
+label:hover input[checked] {
+  transition: all 0.35s ease-in-out;
+}
+
+.error-message {
+  position: relative;
+  z-index: -1;
 }
 
 body {
