@@ -224,7 +224,7 @@ export default function Page() {
                               option !== answer ? (
                                 <Image
                                   src="/images/icon-error.svg"
-                                  alt=""
+                                  alt="Wrong answer"
                                   height={24}
                                   width={24}
                                   className="lg:h-[30px] lg:w-[30px]"
@@ -238,7 +238,7 @@ export default function Page() {
                               option === answer ? (
                                 <Image
                                   src="/images/icon-correct.svg"
-                                  alt=""
+                                  alt="Correct answer"
                                   height={24}
                                   width={24}
                                   className="lg:h-[30px] lg:w-[30px]"

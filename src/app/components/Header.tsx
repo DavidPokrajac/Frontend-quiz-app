@@ -63,7 +63,7 @@ export default function Header({ subject }: HeaderProps) {
             src={`/images/icon-sun-${theme !== "dark" ? "dark" : "light"}.svg`}
             width={16}
             height={16}
-            alt=""
+            alt="Click to change site to light mode"
           />
         </span>
         <label className="relative inline-block h-[20px] w-[32px] rounded-full bg-[var(--clr-purple)] px-[0.25em] py-[0.25em] md:h-[28px] md:w-[48px]">
@@ -80,7 +80,7 @@ export default function Header({ subject }: HeaderProps) {
             src={`/images/icon-moon-${theme !== "dark" ? "dark" : "light"}.svg`}
             width={16}
             height={16}
-            alt=""
+            alt="Click to change site to dark mode"
           />
         </span>
       </div>

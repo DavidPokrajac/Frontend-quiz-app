@@ -35,7 +35,12 @@ export default function ErrorMessage({
   }, [submitIsClicked, checkedName])
   return (
     <div className="error-message flex items-center justify-center gap-[0.5rem]">
-      <Image src="/images/icon-incorrect.svg" alt="" width={32} height={32} />
+      <Image
+        src="/images/icon-incorrect.svg"
+        alt="Incorrect"
+        width={32}
+        height={32}
+      />
       <span className="text-center text-[1.125rem] text-[var(--clr-medium-red)]">
         {errorMessage}
       </span>
