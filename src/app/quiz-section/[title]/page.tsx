@@ -85,6 +85,17 @@ export default function Page() {
         transformOrigin: "center center",
         duration: 0.15
       })
+      const showCorrect = gsap.timeline({ repeat: 0, repeatDelay: 0 })
+      showCorrect.to("label:has(img[src*='correct'])", {
+        scale: 1.05,
+        transformOrigin: "center center",
+        duration: 0.75
+      })
+      showCorrect.to("label:has(img[src*='correct'])", {
+        scale: 1,
+        transformOrigin: "center center",
+        duration: 0.75
+      })
 
       const tlCorrect = gsap.timeline({ repeat: 0, repeatDelay: 0 })
 
@@ -168,6 +179,7 @@ export default function Page() {
         return (
           <Fragment key={quiz.title}>
             <Header subject={quiz.title} />
+
             <main className="relative row-start-2 row-end-3 px-[1.5em] pt-[2em] md:px-[3em] lg:px-0">
               {questions.map((question: QuestionProps, index: number) => {
                 const { options, answer } = question
@@ -177,8 +189,7 @@ export default function Page() {
                     key={index}
                     className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em] lg:grid-cols-[repeat(2,_45%)] lg:gap-[10%]"
                     style={{
-                      left: `calc((110%*${index}) - ${questionNumber}%)`,
-                      padding: "inherit"
+                      left: `calc((110%*${index}) - ${questionNumber}%)`
                     }}
                   >
                     <div className="question-info grid gap-[0.75em] lg:grid-rows-[min-content_250px_auto]">

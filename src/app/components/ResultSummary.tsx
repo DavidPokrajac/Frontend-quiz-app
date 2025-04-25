@@ -24,21 +24,21 @@ export default function ResultSummary({
   const { contextSafe } = useGSAP({ scope: container })
 
   useGSAP(() => {
-    gsap.to(".result-wrapper", {
+    const tl = gsap.timeline({ repeat: 0, repeatDelay: 0 })
+    tl.to(".result-wrapper", {
       x: 0,
       duration: 1.25,
       ease: "power1.inOut"
     })
-    gsap.fromTo(
+    tl.fromTo(
       ".right-answers",
       {
         scale: 0
       },
       {
         scale: 1,
-        duration: 1.25,
-        ease: "steps(6)",
-        delay: 1
+        duration: 0.75,
+        ease: "steps(6)"
       }
     )
   }, [])
@@ -78,10 +78,10 @@ export default function ResultSummary({
           {search}
         </h2>
         <p className="text-center text-[1.125rem] text-[var(--clr-grey-500)] lg:text-[1.5rem] dark:text-[var(--clr-grey-400)]">
-          <span className="right-answers block text-[5.5rem] font-bold text-[var(--clr-grey-700)] lg:text-[9rem] dark:text-[var(--clr-white)]">
+          <strong className="right-answers block text-[5.5rem] font-bold text-[var(--clr-grey-700)] lg:text-[9rem] dark:text-[var(--clr-white)]">
             {rightAnswers}
-          </span>{" "}
-          <span className="out-of-ten">out of 10</span>
+          </strong>
+          out of 10
         </p>
       </div>
       <button
