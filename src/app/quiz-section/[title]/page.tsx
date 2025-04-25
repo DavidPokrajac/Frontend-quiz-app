@@ -19,13 +19,6 @@ import Header from "@/app/components/Header"
 import ErrorMessage from "@/app/components/ErrorMessage"
 import Image from "next/image"
 
-interface DataProps {
-  title: string
-  question: string
-  answer: string
-  options: string[]
-}
-
 export interface QuizProps {
   title: string
   icon: string
@@ -45,7 +38,17 @@ interface QuestionProps {
 gsap.registerPlugin(useGSAP)
 
 export default function Page() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<
+    Array<{
+      title: string
+      icon: string
+      questions: {
+        question: string
+        answer: string
+        options: string[]
+      }[]
+    }>
+  >([])
   const [checkedName, setCheckedName] = useState<string>("")
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
@@ -63,10 +66,23 @@ export default function Page() {
 
   useEffect(() => {
     const quizData = () => {
-      create().then((p) => {
-        const { quizzes } = p
-        setData(quizzes)
-      })
+      create().then(
+        (p: {
+          quizzes: {
+            title: string
+            icon: string
+            questions: {
+              question: string
+              answer: string
+              options: string[]
+            }[]
+          }[]
+        }) => {
+          console.log(p)
+          const { quizzes } = p
+          setData(quizzes)
+        }
+      )
     }
     quizData()
   }, [])
@@ -112,7 +128,7 @@ export default function Page() {
     }
   }, [isSubmitted])
 
-  const filteredQuiz: Array<QuizProps> = data.filter((d: DataProps) => {
+  const filteredQuiz: Array<QuizProps> = data?.filter((d: QuizProps) => {
     return d.title === search
   })
 
