@@ -65,24 +65,17 @@ export default function Page() {
   const search = searchParams.get("title")
 
   useEffect(() => {
-    const quizData = () => {
-      create().then(
-        (p: {
-          quizzes: {
-            title: string
-            icon: string
-            questions: {
-              question: string
-              answer: string
-              options: string[]
-            }[]
-          }[]
-        }) => {
-          console.log(p)
-          const { quizzes } = p
-          setData(quizzes)
-        }
-      )
+    /* const quizData = create().then((p) => {
+      console.log(p)
+      const { quizzes } = p
+      setData(quizzes)
+    })
+
+    console.log(quizData) */
+    const quizData = async () => {
+      const result = await create()
+      const { quizzes } = result
+      setData(quizzes)
     }
     quizData()
   }, [])
