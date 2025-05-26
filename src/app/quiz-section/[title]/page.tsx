@@ -73,9 +73,13 @@ export default function Page() {
 
     console.log(quizData) */
     const quizData = async () => {
-      const result = await create()
-      const { quizzes } = result
-      setData(quizzes)
+      try {
+        const result = await create()
+        const { quizzes } = result
+        setData(quizzes)
+      } catch (error) {
+        console.error(error)
+      }
     }
     quizData()
   }, [])
