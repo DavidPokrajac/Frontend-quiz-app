@@ -65,23 +65,24 @@ export default function Page() {
   const search = searchParams.get("title")
 
   useEffect(() => {
-    create().then((p) => {
+    /* create().then((p) => {
       console.log(p)
       const { quizzes } = p
       setData(quizzes)
-    })
+    }) */
 
     // console.log(quizData)
-    /* const quizData = async () => {
+    const quizData = async () => {
       try {
         const result = await create()
+        console.log("RESULT", result)
         const { quizzes } = result
         setData(quizzes)
       } catch (error) {
         console.error(error)
       }
-    } */
-    /* quizData() */
+    }
+    quizData()
   }, [])
 
   useGSAP(() => {
