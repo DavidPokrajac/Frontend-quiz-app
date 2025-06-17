@@ -1,9 +1,9 @@
 "use client"
 
-import { create } from "../actions"
-import { generateLetter } from "../utils/generateLetter"
+import { create } from "../../actions"
+import { generateLetter } from "../../utils/generateLetter"
 import { useSearchParams } from "next/navigation"
-import { navigate } from "../actions"
+import { navigate } from "../../actions"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 
