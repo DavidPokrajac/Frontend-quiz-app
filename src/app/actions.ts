@@ -6,9 +6,7 @@ import { redirect } from "next/navigation"
 export async function create() {
   try {
     console.log(process.cwd())
-    const pathToData =
-      process.env.NODE_ENV === "development" ? "/data.json" : "data.json"
-    const file = await fs.readFile(process.cwd() + pathToData, "utf8")
+    const file = await fs.readFile(process.cwd() + "/data.json", "utf8")
     const data = JSON.parse(file)
     return data
   } catch (error) {

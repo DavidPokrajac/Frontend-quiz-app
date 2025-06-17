@@ -1,9 +1,9 @@
 "use client"
 
-import { create } from "../../actions"
-import { generateLetter } from "../../utils/generateLetter"
+import { create } from "../actions"
+import { generateLetter } from "../utils/generateLetter"
 import { useSearchParams } from "next/navigation"
-import { navigate } from "../../actions"
+import { navigate } from "../actions"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 
@@ -65,13 +65,6 @@ export default function Page() {
   const search = searchParams.get("title")
 
   useEffect(() => {
-    /* create().then((p) => {
-      console.log(p)
-      const { quizzes } = p
-      setData(quizzes)
-    }) */
-
-    // console.log(quizData)
     const quizData = async () => {
       try {
         const result = await create()
