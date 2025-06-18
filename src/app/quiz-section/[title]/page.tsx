@@ -1,6 +1,5 @@
 "use client"
 
-// import { create } from "../actions"
 import { generateLetter } from "../../utils/generateLetter"
 import { navigate } from "../../actions"
 import gsap from "gsap"
@@ -69,13 +68,7 @@ export default function Page() {
   useEffect(() => {
     const quizData = async () => {
       try {
-        /* const result = await create()
-        console.log("RESULT", result)
-        const { quizzes } = result
-        setData(quizzes) */
-
         const file = await import("../../../../data.json")
-        console.log(file.default)
         const { quizzes } = file.default
         setData(quizzes)
       } catch (error) {
@@ -99,29 +92,29 @@ export default function Page() {
         transformOrigin: "center center",
         duration: 0.15
       })
-      const showCorrect = gsap.timeline({ repeat: 0, repeatDelay: 0 })
+      const showCorrect = gsap.timeline({ repeat: 1, repeatDelay: 0 })
       showCorrect.to("label:has(img[src*='correct'])", {
         scale: 1.05,
         transformOrigin: "center center",
-        duration: 0.75
+        duration: 0.25
       })
       showCorrect.to("label:has(img[src*='correct'])", {
         scale: 1,
         transformOrigin: "center center",
-        duration: 0.75
+        duration: 0.25
       })
 
-      const tlCorrect = gsap.timeline({ repeat: 0, repeatDelay: 0 })
+      const tlCorrect = gsap.timeline({ repeat: 1, repeatDelay: 0 })
 
       tlCorrect.to("label[class*='var(--clr-light-green)']", {
         scale: 1.05,
         transformOrigin: "center center",
-        duration: 0.5
+        duration: 0.25
       })
       tlCorrect.to("label[class*='var(--clr-light-green)']", {
         scale: 1,
         transformOrigin: "center center",
-        duration: 0.5
+        duration: 0.25
       })
     }
   }, [isSubmitted])
@@ -168,14 +161,11 @@ export default function Page() {
     setIsSubmitted(false)
   }
 
-  let showRes = false
-
   useEffect(() => {
     if (isSubmitted && qNumber === 9) {
-      showRes = true
       navigate(filteredQuiz[0].title, rightAnswer)
     }
-  }, [showRes, isSubmitted])
+  }, [isSubmitted, filteredQuiz, qNumber, rightAnswer])
 
   useGSAP(() => {
     gsap.to(".prog", {
