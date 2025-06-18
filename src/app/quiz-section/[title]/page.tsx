@@ -57,7 +57,6 @@ export default function Page() {
   const [submitIsClicked, setSubmitIsClicked] = useState<boolean>(false)
 
   const radioInput = useRef<HTMLInputElement>(null)
-  const { contextSafe } = useGSAP()
 
   const search = useRef<string>(null)
   useEffect(() => {
@@ -138,24 +137,24 @@ export default function Page() {
     setCheckedName(event.target.id)
   }
 
-  const handleSubmit = contextSafe((event: SyntheticEvent, answer: string) => {
+  const handleSubmit = (event: SyntheticEvent, answer: string) => {
     event.preventDefault()
 
-    setValue("")
-
+    setErrorMessage("")
     if (checkedName) {
-      setIsSubmitted(true)
-
       if (value === answer) {
         setRightAnswer((prevValue) => prevValue + 1)
-        setValue("")
         setErrorMessage("")
+        setIsSubmitted(true)
+        setValue("")
       }
-    } else {
+      setIsSubmitted(true)
       setValue("")
+    } else {
       setErrorMessage("Please select an answer")
     }
-  })
+    setSubmitIsClicked(true)
+  }
 
   const handleNextAnswer = () => {
     setQuestionNumber((questionNumber) => questionNumber + 110)
