@@ -1,5 +1,5 @@
 import { promises as fs } from "fs"
-import { QuizProps } from "../quiz-section/page"
+import { QuizProps } from "../quiz-section/[title]/page"
 import QuizSubjectItem from "./QuizSubjectItem"
 import { Fragment } from "react"
 

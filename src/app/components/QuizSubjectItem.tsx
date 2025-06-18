@@ -64,7 +64,7 @@ export default function QuizSubjectItem({ quiz, index }: SubjectTitleProp) {
     >
       <Link
         href={{
-          pathname: `/quiz-section/`,
+          pathname: `/quiz-section/${quiz.title}/`,
           query: {
             title: quiz.title
           }

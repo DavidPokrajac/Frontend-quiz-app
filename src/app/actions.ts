@@ -1,18 +1,21 @@
 "use server"
 
-import { promises as fs } from "fs"
+// import { promises as fs } from "fs"
 import { redirect } from "next/navigation"
+// import path from "path"
 
-export async function create() {
+/* export async function create() {
   try {
-    console.log(process.cwd())
-    const file = await fs.readFile(process.cwd() + "/data.json", "utf8")
-    const data = JSON.parse(file)
+    const pathToPosts =
+      process.env.NODE_ENV === "development" ? "/data.json" : "data.json"
+    const postsDirectoryPath = process.cwd()
+    const files = await fs.readFile(path.join(postsDirectoryPath, pathToPosts))
+    const data = JSON.parse(files)
     return data
   } catch (error) {
     console.error(error)
   }
-}
+} */
 
 export async function navigate(data: string, rightAnswers: number) {
   try {

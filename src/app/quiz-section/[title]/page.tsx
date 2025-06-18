@@ -1,8 +1,8 @@
 "use client"
 
-import { create } from "../actions"
-import { generateLetter } from "../utils/generateLetter"
-import { navigate } from "../actions"
+// import { create } from "../actions"
+import { generateLetter } from "../../utils/generateLetter"
+import { navigate } from "../../actions"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 
@@ -69,9 +69,14 @@ export default function Page() {
   useEffect(() => {
     const quizData = async () => {
       try {
-        const result = await create()
+        /* const result = await create()
         console.log("RESULT", result)
         const { quizzes } = result
+        setData(quizzes) */
+
+        const file = await import("../../../../data.json")
+        console.log(file.default)
+        const { quizzes } = file.default
         setData(quizzes)
       } catch (error) {
         console.error(error)
