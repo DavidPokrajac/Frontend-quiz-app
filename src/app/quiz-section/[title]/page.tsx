@@ -78,46 +78,54 @@ export default function Page() {
     quizData()
   }, [])
 
-  useGSAP(() => {
-    if (isSubmitted) {
+  useGSAP(
+    () => {
       const tl = gsap.timeline({ repeat: 1, repeatDelay: 0 })
-
-      tl.to("label[class*='var(--clr-medium-red)']", {
-        rotation: 2.5,
-        transformOrigin: "center center",
-        duration: 0.15
-      })
-      tl.to("label[class*='var(--clr-medium-red)']", {
-        rotation: 0,
-        transformOrigin: "center center",
-        duration: 0.15
-      })
       const showCorrect = gsap.timeline({ repeat: 1, repeatDelay: 0 })
-      showCorrect.to("label:has(img[src*='correct'])", {
-        scale: 1.05,
-        transformOrigin: "center center",
-        duration: 0.25
-      })
-      showCorrect.to("label:has(img[src*='correct'])", {
-        scale: 1,
-        transformOrigin: "center center",
-        duration: 0.25
-      })
-
       const tlCorrect = gsap.timeline({ repeat: 1, repeatDelay: 0 })
+      if (isSubmitted) {
+        tl.to("label[class*='var(--clr-medium-red)']", {
+          rotation: 2.5,
+          transformOrigin: "center center",
+          duration: 0.15
+        })
+        tl.to("label[class*='var(--clr-medium-red)']", {
+          rotation: 0,
+          transformOrigin: "center center",
+          duration: 0.15
+        })
 
-      tlCorrect.to("label[class*='var(--clr-light-green)']", {
-        scale: 1.05,
-        transformOrigin: "center center",
-        duration: 0.25
-      })
-      tlCorrect.to("label[class*='var(--clr-light-green)']", {
-        scale: 1,
-        transformOrigin: "center center",
-        duration: 0.25
-      })
-    }
-  }, [isSubmitted])
+        showCorrect.to("label:has(img[src*='correct'])", {
+          scale: 1.05,
+          transformOrigin: "center center",
+          duration: 0.25
+        })
+        showCorrect.to("label:has(img[src*='correct'])", {
+          scale: 1,
+          transformOrigin: "center center",
+          duration: 0.25
+        })
+
+        tlCorrect.to("label[class*='var(--clr-light-green)']", {
+          scale: 1.05,
+          transformOrigin: "center center",
+          duration: 0.25
+        })
+        tlCorrect.to("label[class*='var(--clr-light-green)']", {
+          scale: 1,
+          transformOrigin: "center center",
+          duration: 0.25
+        })
+      }
+
+      return () => {
+        tl.revert()
+        showCorrect.revert()
+        tlCorrect.revert()
+      }
+    },
+    { dependencies: [isSubmitted], revertOnUpdate: true }
+  )
 
   const filteredQuiz: Array<QuizProps> = data?.filter((d: QuizProps) => {
     return d.title === search.current
@@ -128,18 +136,15 @@ export default function Page() {
     setSubmitIsClicked(false)
     setValue(event.target.nextSibling?.nodeValue as string)
     setCheckedName(event.target.id)
-    console.log("Hi")
   }
 
   const handleSubmit = contextSafe((event: SyntheticEvent, answer: string) => {
     event.preventDefault()
 
-    setErrorMessage("")
-    setSubmitIsClicked(true)
+    setValue("")
 
     if (checkedName) {
       setIsSubmitted(true)
-      setValue("")
 
       if (value === answer) {
         setRightAnswer((prevValue) => prevValue + 1)
@@ -163,7 +168,9 @@ export default function Page() {
 
   useEffect(() => {
     if (isSubmitted && qNumber === 9) {
-      navigate(filteredQuiz[0].title, rightAnswer)
+      setTimeout(() => {
+        navigate(filteredQuiz[0].title, rightAnswer)
+      }, 1000)
     }
   }, [isSubmitted, filteredQuiz, qNumber, rightAnswer])
 
@@ -191,9 +198,9 @@ export default function Page() {
                 return (
                   <div
                     key={index}
-                    className="absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em] lg:grid-cols-[repeat(2,_45%)] lg:gap-[10%]"
+                    className="question-wrapper absolute top-0 grid w-full grid-rows-subgrid gap-[2.5em] px-[1.5em] md:px-[3em] lg:grid-cols-[repeat(2,_45%)] lg:gap-[10%] lg:px-0"
                     style={{
-                      left: `calc((110%*${index}) - ${questionNumber}%)`
+                      left: `calc((110vw*${index}) - ${questionNumber}vw)`
                     }}
                   >
                     <div className="question-info grid gap-[0.75em] lg:grid-rows-[min-content_250px_auto]">
